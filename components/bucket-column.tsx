@@ -129,7 +129,9 @@ export function BucketColumn() {
             <CardContent>
               <p>{row.getValue("pointEstimate")}</p>
               {(row.getValue("tags") as TaskTag[]).map((e) => (
-                <Badge variant="outline">{e}</Badge>
+                <Badge variant="outline" key={e}>
+                  {e}
+                </Badge>
               ))}
             </CardContent>
             <CardFooter>

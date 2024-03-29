@@ -147,7 +147,9 @@ export const TaskUpdateForm = ({ task }: { task: Task }) => {
                       </FormControl>
                       <SelectContent>
                         {Object.values(PointEstimate).map((e) => (
-                          <SelectItem value={e}>{e}</SelectItem>
+                          <SelectItem value={e} key={e}>
+                            {e}
+                          </SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
@@ -171,7 +173,9 @@ export const TaskUpdateForm = ({ task }: { task: Task }) => {
                       </FormControl>
                       <SelectContent>
                         {data.users.map((e) => (
-                          <SelectItem value={e.id}>{e.fullName}</SelectItem>
+                          <SelectItem value={e.id} key={e.id}>
+                            {e.fullName}
+                          </SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
