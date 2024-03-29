@@ -1,11 +1,9 @@
-import { DataTableDemo } from "@/components/bucket";
-import { PollPage } from "./test";
+import { BucketColumn } from "@/components/bucket-column";
 
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <PollPage/>
-      <DataTableDemo/>
+      <BucketColumn/>
     </main>
   );
 }
