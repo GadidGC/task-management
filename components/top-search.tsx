@@ -1,13 +1,8 @@
-import {
-  LayoutDashboardIcon,
-  LayoutList,
-  PlusIcon,
-  SearchIcon,
-} from "lucide-react";
+import { LayoutDashboardIcon, LayoutList, SearchIcon } from "lucide-react";
+import { TaskForm } from "./task-form";
+import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
 import { Input } from "./ui/input";
-import { Button } from "./ui/button";
-import { CreateTaskForm } from "./task-form";
 
 export const TopSearch = () => {
   return (
@@ -28,7 +23,7 @@ export const TopSearch = () => {
           </Button>
         </div>
 
-        <CreateTaskForm />
+        <TaskForm variant={{ type: "CREATE" }} />
       </div>
     </div>
   );

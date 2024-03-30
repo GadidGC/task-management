@@ -24,7 +24,6 @@ import {
 } from "@/generated/graphql";
 import { GET_TASKS } from "@/graphql/queries.graphql";
 import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr";
-import { TaskUpdateForm } from "./task-form";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Badge } from "./ui/badge";
 import {
@@ -34,6 +33,7 @@ import {
   CardHeader,
   CardTitle,
 } from "./ui/card";
+import { TaskForm } from "./task-form";
 
 export const columns: ColumnDef<Task>[] = [
   {
@@ -120,18 +120,21 @@ export function BucketColumn({
           <Card key={row.id} className="mt-2">
             <CardHeader className="flex flex-row justify-between align-middle items-center">
               <CardTitle>{row.getValue("name")}</CardTitle>
-              <TaskUpdateForm
-                task={{
-                  creator: row.getValue("creator"),
-                  assignee: row.getValue("name"),
-                  createdAt: row.getValue("createdAt"),
-                  dueDate: row.getValue("dueDate"),
-                  id: row.getValue("id"),
-                  name: row.getValue("name"),
-                  pointEstimate: row.getValue("pointEstimate"),
-                  position: row.getValue("position"),
-                  status: row.getValue("status"),
-                  tags: row.getValue("tags"),
+              <TaskForm
+                variant={{
+                  type: "UPDATE",
+                  value: {
+                    creator: row.getValue("creator"),
+                    assignee: row.getValue("name"),
+                    createdAt: row.getValue("createdAt"),
+                    dueDate: row.getValue("dueDate"),
+                    id: row.getValue("id"),
+                    name: row.getValue("name"),
+                    pointEstimate: row.getValue("pointEstimate"),
+                    position: row.getValue("position"),
+                    status: row.getValue("status"),
+                    tags: row.getValue("tags"),
+                  },
                 }}
               />
             </CardHeader>
