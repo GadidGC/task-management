@@ -55,6 +55,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Draggable } from "./draggable";
 
 export function AlertDialogDemo({
   cancel,
@@ -173,59 +174,63 @@ export function BucketColumn({
       {header}
       <div className="min-w-80 max-w-3xl">
         {table.getRowModel().rows.map((row) => (
-          <Card key={row.id} className="mt-2">
-            <CardHeader className="flex flex-row justify-between align-middle items-center">
-              <CardTitle>{row.getValue("name")}</CardTitle>
-              <DropdownMenu>
-                <DropdownMenuTrigger>
-                  <DotsIcon />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  <TaskForm
-                    variant={{
-                      type: "UPDATE",
-                      value: {
-                        creator: row.getValue("creator"),
-                        assignee: row.getValue("name"),
-                        createdAt: row.getValue("createdAt"),
-                        dueDate: row.getValue("dueDate"),
-                        id: row.getValue("id"),
-                        name: row.getValue("name"),
-                        pointEstimate: row.getValue("pointEstimate"),
-                        position: row.getValue("position"),
-                        status: row.getValue("status"),
-                        tags: row.getValue("tags"),
-                      },
-                    }}
+          <Draggable id={row.getValue("id")}>
+            <Card key={row.id} className="w-full">
+              <CardHeader className="flex flex-row justify-between align-middle items-center">
+                <CardTitle>{row.getValue("name")}</CardTitle>
+                <DropdownMenu>
+                  <DropdownMenuTrigger>
+                    <DotsIcon />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <TaskForm
+                      variant={{
+                        type: "UPDATE",
+                        value: {
+                          creator: row.getValue("creator"),
+                          assignee: row.getValue("name"),
+                          createdAt: row.getValue("createdAt"),
+                          dueDate: row.getValue("dueDate"),
+                          id: row.getValue("id"),
+                          name: row.getValue("name"),
+                          pointEstimate: row.getValue("pointEstimate"),
+                          position: row.getValue("position"),
+                          status: row.getValue("status"),
+                          tags: row.getValue("tags"),
+                        },
+                      }}
+                    />
+                    <AlertDialogDemo
+                      accept={() => handleOnClickDelete(row.getValue("id"))}
+                      cancel={() => {}}
+                    />
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </CardHeader>
+              <CardContent>
+                <div className="flex flex-row justify-between">
+                  <p>{row.getValue("pointEstimate")}</p>
+                  {checkTaskStatus(new Date(row.getValue("dueDate")))}
+                </div>
+                <div className="flex pt-2">
+                  {(row.getValue("tags") as TaskTag[]).map((e) => (
+                    <Badge variant="outline" key={e}>
+                      {e}
+                    </Badge>
+                  ))}
+                </div>
+              </CardContent>
+              <CardFooter>
+                {row.getValue("assignee")}
+                <Avatar>
+                  <AvatarImage
+                    src={(row.getValue("assignee") as User)?.avatar ?? ""}
                   />
-                  <AlertDialogDemo
-                    accept={() => handleOnClickDelete(row.getValue("id"))}
-                    cancel={() => {}}
-                  />
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </CardHeader>
-            <CardContent>
-              <div className="flex flex-row justify-between">
-                <p>{row.getValue("pointEstimate")}</p>
-                {checkTaskStatus(new Date(row.getValue("dueDate")))}
-              </div>
-              {(row.getValue("tags") as TaskTag[]).map((e) => (
-                <Badge variant="outline" key={e}>
-                  {e}
-                </Badge>
-              ))}
-            </CardContent>
-            <CardFooter>
-              {row.getValue("assignee")}
-              <Avatar>
-                <AvatarImage
-                  src={(row.getValue("assignee") as User)?.avatar ?? ""}
-                />
-                <AvatarFallback>-</AvatarFallback>
-              </Avatar>
-            </CardFooter>
-          </Card>
+                  <AvatarFallback>-</AvatarFallback>
+                </Avatar>
+              </CardFooter>
+            </Card>
+          </Draggable>
         ))}
       </div>
     </div>

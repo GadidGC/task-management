@@ -13,6 +13,7 @@
   "dependencies": {
     "@apollo/client": "rc",
     "@apollo/experimental-nextjs-app-support": "^0.9.1",
+    "@dnd-kit/core": "^6.1.0",
     "@graphql-codegen/cli": "^5.0.2",
     "@graphql-codegen/typescript": "^4.0.6",
     "@graphql-codegen/typescript-operations": "^4.2.0",
