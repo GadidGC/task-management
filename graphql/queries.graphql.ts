@@ -23,3 +23,17 @@ export const GET_TASKS = gql`
     }
   }
 `;
+
+export const GET_PROFILE = gql`
+  query profile {
+      profile {
+          avatar
+          createdAt
+          email
+          fullName
+          id
+          type
+          updatedAt
+      }
+  }
+`;

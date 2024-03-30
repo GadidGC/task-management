@@ -23,6 +23,8 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import Link from "next/link";
 
 export const TopSearch = ({
   estimateFilter,
@@ -50,6 +52,7 @@ export const TopSearch = ({
                 onSetNameFilter(event.target.value);
               }}
             />
+
             <DropdownMenu>
               <DropdownMenuTrigger className="flex flex-row">
                 <FilterIcon />
@@ -104,6 +107,12 @@ export const TopSearch = ({
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
+          <Link href={"/settings"}>
+            <Avatar>
+              <AvatarImage src="" />
+              <AvatarFallback>G</AvatarFallback>
+            </Avatar>
+          </Link>
         </CardContent>
       </Card>
 
