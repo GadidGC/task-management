@@ -3,8 +3,11 @@
 export const dynamic = "force-dynamic";
 
 import { BucketColumn } from "@/components/bucket-column";
+import { Droppable } from "@/components/droppable";
 import { SideNavigation } from "@/components/side-navigation";
 import { TopSearch } from "@/components/top-search";
+import { toast } from "@/components/ui/use-toast";
+import { UPDATE_TASK } from "@/graphql/mutations.graphql";
 import { GET_TASKS } from "@/graphql/queries.graphql";
 import {
   FilterTaskInput,
@@ -14,13 +17,9 @@ import {
   TaskTag,
 } from "@/graphql/types";
 import { useMutation, useQuery } from "@apollo/client";
-import { useState } from "react";
 import { DndContext, DragEndEvent } from "@dnd-kit/core";
-import { Droppable } from "@/components/droppable";
-import { Draggable } from "@/components/draggable";
-import { UPDATE_TASK } from "@/graphql/mutations.graphql";
+import { useState } from "react";
 import { z } from "zod";
-import { toast } from "@/components/ui/use-toast";
 
 const UpdateTaskStatusSchema = z.object({
   id: z.string(),
@@ -84,9 +83,9 @@ export default function Home() {
   }
 
   return (
-    <main className="flex min-h-screen flex-row justify-start gap-10">
+    <main className="flex max-h-screen flex-row justify-start gap-10 p-7">
       <SideNavigation />
-      <div className="flex flex-col w-full">
+      <div className="flex flex-col w-full  overflow-x-auto">
         <TopSearch
           onSetNameFilter={(name: string) => {
             const filterInput: FilterTaskInput = name === "" ? {} : { name };
@@ -112,7 +111,7 @@ export default function Home() {
         />
 
         <DndContext onDragEnd={handleDragEnd}>
-          <div className="flex flex-row gap-5">
+          <div className="flex flex-row gap-5 flex-1 w-full h-full overflow-y-auto ">
             {columns.map((column) => (
               <Droppable
                 key={column.status}

@@ -28,7 +28,7 @@ export function Droppable(props: {
   };
 
   return (
-    <div ref={setNodeRef} style={style}>
+    <div ref={setNodeRef} style={style} className="flex w-full h-full">
       {props.children}
     </div>
   );

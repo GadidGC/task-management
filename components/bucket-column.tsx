@@ -170,9 +170,9 @@ export function BucketColumn({
   };
 
   return (
-    <div>
+    <div className="flex flex-col flex-1">
       {header}
-      <div className="min-w-80 max-w-3xl">
+      <div className="min-w-64 max-w-3xl overflow-y-auto flex flex-col">
         {table.getRowModel().rows.map((row) => (
           <Draggable id={row.getValue("id")} key={row.getValue("id")}>
             <Card className="w-full">
