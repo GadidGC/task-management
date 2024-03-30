@@ -1,4 +1,6 @@
 import { BucketColumn } from "@/components/bucket-column";
+import { SideNavigation } from "@/components/side-navigation";
+import { TopSearch } from "@/components/top-search";
 import { FilterTaskInput, Status, Task } from "@/generated/graphql";
 import { GET_TASKS } from "@/graphql/queries.graphql";
 import { getClient } from "@/lib/client";
@@ -26,13 +28,19 @@ export default async function Home() {
 
   return (
     <main className="flex min-h-screen flex-row justify-start gap-10">
-      {columns.map((column) => (
-        <BucketColumn
-          key={column.header}
-          header={column.header}
-          tasks={filterTasksByStatus(column.status)}
-        />
-      ))}
+      <SideNavigation />
+      <div className="flex flex-col w-full">
+        <TopSearch />
+        <div className="flex flex-row gap-5">
+          {columns.map((column) => (
+            <BucketColumn
+              key={column.header}
+              header={column.header}
+              tasks={filterTasksByStatus(column.status)}
+            />
+          ))}
+        </div>
+      </div>
     </main>
   );
 }

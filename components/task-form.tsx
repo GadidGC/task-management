@@ -101,7 +101,6 @@ export const TaskUpdateForm = ({ task }: { task: Task }) => {
       id: task.id,
     },
   });
-  console.log("ERRROR", error);
 
   function onSubmit(data: z.infer<typeof TaskInputSchema>) {
     updateTask({
