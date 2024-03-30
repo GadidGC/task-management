@@ -174,8 +174,8 @@ export function BucketColumn({
       {header}
       <div className="min-w-80 max-w-3xl">
         {table.getRowModel().rows.map((row) => (
-          <Draggable id={row.getValue("id")}>
-            <Card key={row.id} className="w-full">
+          <Draggable id={row.getValue("id")} key={row.getValue("id")}>
+            <Card className="w-full">
               <CardHeader className="flex flex-row justify-between align-middle items-center">
                 <CardTitle>{row.getValue("name")}</CardTitle>
                 <DropdownMenu>
