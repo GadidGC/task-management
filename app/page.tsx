@@ -6,16 +6,19 @@ import { BucketColumn } from "@/components/bucket-column";
 import { SideNavigation } from "@/components/side-navigation";
 import { TopSearch } from "@/components/top-search";
 import { GET_TASKS } from "@/graphql/queries.graphql";
-import { FilterTaskInput, Status, Task } from "@/graphql/types";
+import { FilterTaskInput, Status, Task, TaskTag } from "@/graphql/types";
 import { useQuery } from "@apollo/client";
+import { useState } from "react";
 
 export default function Home() {
-  const { data } = useQuery<{ tasks: Task[] }>(GET_TASKS, {
+  const { data, refetch } = useQuery<{ tasks: Task[] }>(GET_TASKS, {
     variables: {
-      input: {} as FilterTaskInput,
+      input: {},
     },
-    pollInterval: 500,
   });
+
+  const [estimateFilter, setEstimateFilter] = useState<string>("");
+  const [tagFilter, setTagFilter] = useState<TaskTag[]>([]);
 
   // Array of objects containing header and corresponding status
   const columns = [
@@ -34,7 +37,29 @@ export default function Home() {
     <main className="flex min-h-screen flex-row justify-start gap-10">
       <SideNavigation />
       <div className="flex flex-col w-full">
-        <TopSearch />
+        <TopSearch
+          onSetNameFilter={(name: string) => {
+            const filterInput: FilterTaskInput = name === "" ? {} : { name };
+            refetch({ input: filterInput });
+          }}
+          updateEstimateFilter={(estimate) => {
+            if (estimate === estimateFilter) {
+              refetch({ input: {} });
+              setEstimateFilter("");
+            } else {
+              const filterInput: FilterTaskInput = { pointEstimate: estimate };
+              refetch({ input: filterInput });
+              setEstimateFilter(estimate);
+            }
+          }}
+          udpateTagFilter={(tags) => {
+            const filterInput: FilterTaskInput = { tags };
+            refetch({ input: filterInput });
+            setTagFilter(tags);
+          }}
+          estimateFilter={estimateFilter}
+          tagFilter={tagFilter}
+        />
         <div className="flex flex-row gap-5">
           {columns.map((column) => (
             <BucketColumn
