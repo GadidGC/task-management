@@ -7,6 +7,7 @@ import {
 import { Card, CardContent } from "./ui/card";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
+import { CreateTaskForm } from "./task-form";
 
 export const TopSearch = () => {
   return (
@@ -26,9 +27,8 @@ export const TopSearch = () => {
             <LayoutDashboardIcon />
           </Button>
         </div>
-        <Button>
-          <PlusIcon />
-        </Button>
+
+        <CreateTaskForm />
       </div>
     </div>
   );

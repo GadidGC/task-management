@@ -14,3 +14,18 @@ export const UPDATE_TASK = gql`
         }
     }
 `;
+
+export const CREATE_TASK = gql`
+  mutation createTask ($input: CreateTaskInput!) {
+      createTask (input: $input) {
+          createdAt
+          dueDate
+          id
+          name
+          pointEstimate
+          position
+          status
+          tags
+      }
+  }
+`;
