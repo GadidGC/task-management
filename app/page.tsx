@@ -1,17 +1,20 @@
+"use client";
+
+export const dynamic = "force-dynamic";
+
 import { BucketColumn } from "@/components/bucket-column";
 import { SideNavigation } from "@/components/side-navigation";
 import { TopSearch } from "@/components/top-search";
-import { FilterTaskInput, Status, Task } from "@/graphql/types";
 import { GET_TASKS } from "@/graphql/queries.graphql";
-import { getClient } from "@/lib/client";
-import { ErrorBoundary } from "next/dist/client/components/error-boundary";
+import { FilterTaskInput, Status, Task } from "@/graphql/types";
+import { useQuery } from "@apollo/client";
 
-export default async function Home() {
-  const { data } = await getClient().query<{ tasks: Task[] }>({
-    query: GET_TASKS,
+export default function Home() {
+  const { data } = useQuery<{ tasks: Task[] }>(GET_TASKS, {
     variables: {
       input: {} as FilterTaskInput,
     },
+    pollInterval: 500,
   });
 
   // Array of objects containing header and corresponding status
@@ -25,7 +28,7 @@ export default async function Home() {
 
   // Function to filter tasks by status
   const filterTasksByStatus = (status: Status) =>
-    data.tasks.filter((task) => task.status === status);
+    data?.tasks.filter((task) => task.status === status) ?? [];
 
   return (
     <main className="flex min-h-screen flex-row justify-start gap-10">
