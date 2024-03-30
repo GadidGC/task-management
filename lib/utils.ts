@@ -1,3 +1,4 @@
+import { PointEstimate } from "@/graphql/types";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -13,10 +14,10 @@ export enum TASK_STATUS_TIME {
 
 export function checkTaskStatus(taskDate: Date): TASK_STATUS_TIME  {
   const currentDate = new Date();
-  const timeDifference = taskDate.getTime() - currentDate.getTime();
+  const timeDifference =  taskDate.getTime() - currentDate.getTime() ;
   const dayDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
 
-  if (dayDifference < 0) {
+  if (timeDifference < 0) {
     return TASK_STATUS_TIME.LATE;
   } 
   
@@ -27,3 +28,26 @@ export function checkTaskStatus(taskDate: Date): TASK_STATUS_TIME  {
   return TASK_STATUS_TIME.ON_TIME;
 
 } 
+
+export function convertEstimateToReadbleNumber(
+  estimate: PointEstimate,
+): string {
+  if (estimate === PointEstimate.Eight) {
+    return "8";
+  }
+
+  if (estimate === PointEstimate.Four) {
+    return "4";
+  }
+
+  if (estimate === PointEstimate.Two) {
+    return "2";
+  }
+
+  if (estimate === PointEstimate.One) {
+    return "1";
+  }
+
+  return "0";
+}
+

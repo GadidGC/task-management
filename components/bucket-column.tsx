@@ -13,8 +13,8 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import * as React from "react";
 
+import { DELETE_TASK } from "@/graphql/mutations.graphql";
 import {
   DeleteTaskInput,
   MutationDeleteTaskArgs,
@@ -22,27 +22,24 @@ import {
   TaskTag,
   User,
 } from "@/graphql/types";
-import { checkTaskStatus } from "@/lib/utils";
+import {
+  TASK_STATUS_TIME,
+  checkTaskStatus,
+  convertEstimateToReadbleNumber,
+} from "@/lib/utils";
+import { useMutation } from "@apollo/client";
+import { useState } from "react";
 import { DotsIcon } from "./icons";
 import { TaskForm } from "./task-form";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Badge } from "./ui/badge";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "./ui/card";
+import { Button } from "./ui/button";
+import { Card, CardContent, CardFooter, CardHeader } from "./ui/card";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { Button } from "./ui/button";
-import { useState } from "react";
-import { useMutation } from "@apollo/client";
-import { DELETE_TASK } from "@/graphql/mutations.graphql";
 
 import {
   AlertDialog,
@@ -55,7 +52,33 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { AlarmClockIcon } from "lucide-react";
 import { Draggable } from "./draggable";
+import { format } from "date-fns";
+
+function TaskOnTime({ dueDate }: { dueDate: Date }) {
+  if (checkTaskStatus(dueDate) === TASK_STATUS_TIME.LATE) {
+    return (
+      <Badge className="bg-red-100 text-red-600 gap-2">
+        <AlarmClockIcon /> {format(dueDate, "dd MMMM yyyy")}
+      </Badge>
+    );
+  }
+
+  if (checkTaskStatus(dueDate) === TASK_STATUS_TIME.ALMOST_LATE) {
+    return (
+      <Badge className="bg-yellow-100 text-yellow-600 gap-2">
+        <AlarmClockIcon /> {format(dueDate, "dd MMMM yyyy")}
+      </Badge>
+    );
+  }
+
+  return (
+    <Badge className="bg-transparent/10 gap-2 flex ">
+      <AlarmClockIcon /> {format(dueDate, "dd MMMM yyyy")}
+    </Badge>
+  );
+}
 
 export function AlertDialogDemo({
   cancel,
@@ -172,7 +195,7 @@ export function BucketColumn({
   return (
     <div className="flex flex-col flex-1">
       <p className="text-lg font-medium">{header}</p>
-      <div className="min-w-64 max-w-3xl overflow-y-auto flex flex-col">
+      <div className="min-w-64 max-w-3xl  flex flex-col overflow-visible relative">
         {table.getRowModel().rows.map((row) => (
           <Draggable id={row.getValue("id")} key={row.getValue("id")}>
             <Card className="w-full">
@@ -209,19 +232,22 @@ export function BucketColumn({
               </CardHeader>
               <CardContent>
                 <div className="flex flex-row justify-between">
-                  <p>{row.getValue("pointEstimate")}</p>
-                  {checkTaskStatus(new Date(row.getValue("dueDate")))}
+                  <p>
+                    {`${convertEstimateToReadbleNumber(
+                      row.getValue("pointEstimate"),
+                    )} points`}
+                  </p>
+                  <TaskOnTime dueDate={new Date(row.getValue("dueDate"))} />
                 </div>
-                <div className="flex pt-2">
+                <div className="flex pt-3">
                   {(row.getValue("tags") as TaskTag[]).map((e) => (
-                    <Badge variant="outline" key={e}>
+                    <Badge variant="outline" key={e} className="p-2">
                       {e}
                     </Badge>
                   ))}
                 </div>
               </CardContent>
               <CardFooter>
-                {row.getValue("assignee")}
                 <Avatar>
                   <AvatarImage
                     src={(row.getValue("assignee") as User)?.avatar ?? ""}

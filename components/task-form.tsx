@@ -98,16 +98,16 @@ export const TaskForm = ({
 
   return (
     <Dialog>
-      <DialogTrigger asChild>
+      <DialogTrigger asChild className="z-50">
         {variant.type === "CREATE" ? (
           <div className="bg-primary text-primary-foreground hover:bg-primary/90 flex justify-center p-2 rounded-[10px]">
             <PlusIcon />
           </div>
         ) : (
-          "Edit"
+          <div className="z-50 select-none">Edit</div>
         )}
       </DialogTrigger>
-      <DialogContent className="max-w-3xl">
+      <DialogContent className="max-w-3xl z-50">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <FormField

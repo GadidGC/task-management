@@ -17,7 +17,15 @@ import {
   TaskTag,
 } from "@/graphql/types";
 import { useMutation, useQuery } from "@apollo/client";
-import { DndContext, DragEndEvent } from "@dnd-kit/core";
+import {
+  DndContext,
+  DragEndEvent,
+  MouseSensor,
+  PointerSensor,
+  TouchSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
 import { useState } from "react";
 import { z } from "zod";
 
@@ -35,6 +43,24 @@ export default function Home() {
 
   const [estimateFilter, setEstimateFilter] = useState<string>("");
   const [tagFilter, setTagFilter] = useState<TaskTag[]>([]);
+
+  const mouseSensor = useSensor(MouseSensor, {
+    // Press delay of 200ms, with tolerance of 5px of movement
+    activationConstraint: {
+      delay: 200,
+      tolerance: 10,
+    },
+  });
+
+  const pointerSensor = useSensor(PointerSensor, {
+    // Press delay of 200ms, with tolerance of 5px of movement
+    activationConstraint: {
+      delay: 200,
+      tolerance: 10,
+    },
+  });
+
+  const sensors = useSensors(mouseSensor, pointerSensor);
 
   const [mutate, { loading, error }] =
     useMutation<MutationUpdateTaskArgs>(UPDATE_TASK);
@@ -110,7 +136,7 @@ export default function Home() {
           tagFilter={tagFilter}
         />
 
-        <DndContext onDragEnd={handleDragEnd}>
+        <DndContext onDragEnd={handleDragEnd} sensors={sensors}>
           <div className="flex flex-row gap-5 flex-1 w-full h-full overflow-y-auto ">
             {columns.map((column) => (
               <Droppable

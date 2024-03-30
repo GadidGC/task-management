@@ -1,6 +1,5 @@
-import React from "react";
 import { useDraggable } from "@dnd-kit/core";
-import { Status } from "@/graphql/types";
+import React from "react";
 
 export function Draggable(props: {
   id: string;
@@ -28,7 +27,7 @@ export function Draggable(props: {
     : undefined;
 
   return (
-    <button
+    <div
       ref={setNodeRef}
       style={style}
       {...listeners}
@@ -36,6 +35,6 @@ export function Draggable(props: {
       className="flex flex-col w-full mt-2"
     >
       {props.children}
-    </button>
+    </div>
   );
 }
