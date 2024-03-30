@@ -44,6 +44,49 @@ import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { DELETE_TASK } from "@/graphql/mutations.graphql";
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+
+export function AlertDialogDemo({
+  cancel,
+  accept,
+}: {
+  cancel: () => void;
+  accept: () => void;
+}) {
+  return (
+    <AlertDialog>
+      <AlertDialogTrigger asChild>
+        <Button variant="outline">Delete</Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+          <AlertDialogDescription>
+            This action cannot be undone. This will permanently delete this task
+            and remove your task data from our servers.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel onClick={() => cancel()}>Cancel</AlertDialogCancel>
+          <AlertDialogAction onClick={() => accept()}>
+            Continue
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+}
+
 export const columns: ColumnDef<Task>[] = [
   {
     accessorKey: "name",
@@ -155,11 +198,10 @@ export function BucketColumn({
                       },
                     }}
                   />
-                  <Button
-                    onClick={() => handleOnClickDelete(row.getValue("id"))}
-                  >
-                    Delete
-                  </Button>
+                  <AlertDialogDemo
+                    accept={() => handleOnClickDelete(row.getValue("id"))}
+                    cancel={() => {}}
+                  />
                 </DropdownMenuContent>
               </DropdownMenu>
             </CardHeader>
