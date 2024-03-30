@@ -16,7 +16,7 @@ export const UPDATE_TASK = gql`
 `;
 
 export const CREATE_TASK = gql`
-  mutation createTask ($input: CreateTaskInput!) {
+    mutation createTask ($input: CreateTaskInput!) {
       createTask (input: $input) {
           createdAt
           dueDate
@@ -29,3 +29,18 @@ export const CREATE_TASK = gql`
       }
   }
 `;
+
+export const DELETE_TASK = gql`
+    mutation deleteTask ($input: DeleteTaskInput!) {
+        deleteTask (input: $input) {
+            createdAt
+            dueDate
+            id
+            name
+            pointEstimate
+            position
+            status
+            tags
+        }
+    }
+`

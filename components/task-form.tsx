@@ -100,7 +100,7 @@ export const TaskForm = ({
     <Dialog>
       <DialogTrigger asChild>
         <div className="flex relative hover:bg-primary/20 text-white p-3 rounded-full">
-          {variant.type === "CREATE" ? <PlusIcon /> : <DotsIcon />}
+          {variant.type === "CREATE" ? <PlusIcon /> : "Edit"}
         </div>
       </DialogTrigger>
       <DialogContent className="max-w-3xl">
