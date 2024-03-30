@@ -1,5 +1,7 @@
 "use client";
 
+export const dynamic = "force-dynamic";
+
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -15,16 +17,16 @@ import * as React from "react";
 
 import {
   FilterTaskInput,
-  MutationUpdateTaskArgs,
   Status,
   Task,
   TaskTag,
-  UpdateTaskInput,
   User,
 } from "@/generated/graphql";
 import { GET_TASKS } from "@/graphql/queries.graphql";
 import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr";
+import { TaskUpdateForm } from "./task-form";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { Badge } from "./ui/badge";
 import {
   Card,
   CardContent,
@@ -32,12 +34,6 @@ import {
   CardHeader,
   CardTitle,
 } from "./ui/card";
-import { Badge } from "./ui/badge";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { useMutation } from "@apollo/client";
-import { UPDATE_TASK } from "@/graphql/mutations.graphql";
-import { TaskUpdateForm } from "./task-form";
 
 export const columns: ColumnDef<Task>[] = [
   {
@@ -63,6 +59,22 @@ export const columns: ColumnDef<Task>[] = [
   {
     accessorKey: "assignee",
     header: "Task Assign Name",
+  },
+  {
+    accessorKey: "id",
+    header: "Id",
+  },
+  {
+    accessorKey: "createdAt",
+    header: "Created at",
+  },
+  {
+    accessorKey: "creator",
+    header: "Creator",
+  },
+  {
+    accessorKey: "position",
+    header: "Position",
   },
 ];
 

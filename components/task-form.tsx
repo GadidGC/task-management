@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import {
@@ -47,18 +48,16 @@ const DotsIcon = () => (
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 32.055 32.055"
   >
-    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+    <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
     <g
       id="SVGRepo_tracerCarrier"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     ></g>
     <g id="SVGRepo_iconCarrier">
-      {" "}
       <g>
-        {" "}
         <path d="M3.968,12.061C1.775,12.061,0,13.835,0,16.027c0,2.192,1.773,3.967,3.968,3.967c2.189,0,3.966-1.772,3.966-3.967 C7.934,13.835,6.157,12.061,3.968,12.061z M16.233,12.061c-2.188,0-3.968,1.773-3.968,3.965c0,2.192,1.778,3.967,3.968,3.967 s3.97-1.772,3.97-3.967C20.201,13.835,18.423,12.061,16.233,12.061z M28.09,12.061c-2.192,0-3.969,1.774-3.969,3.967 c0,2.19,1.774,3.965,3.969,3.965c2.188,0,3.965-1.772,3.965-3.965S30.278,12.061,28.09,12.061z"></path>{" "}
-      </g>{" "}
+      </g>
     </g>
   </svg>
 );
@@ -82,22 +81,36 @@ const TaskInputSchema = z.object({
   pointEstimate: z.string(),
   dueDate: z.date().optional(),
   tags: z.array(z.string()),
-  assigneeId: z.string(),
+  assigneeId: z.string().optional(),
+  id: z.string(),
 });
 
 export const TaskUpdateForm = ({ task }: { task: Task }) => {
-  const [updateTask] = useMutation<MutationUpdateTaskArgs>(UPDATE_TASK);
+  const [updateTask, { loading, error }] =
+    useMutation<MutationUpdateTaskArgs>(UPDATE_TASK);
 
-  const { data } = useSuspenseQuery<{ users: User[] }>(GET_USERS);
+  const { data: users } = useSuspenseQuery<{ users: User[] }>(GET_USERS);
 
   const form = useForm<z.infer<typeof TaskInputSchema>>({
     resolver: zodResolver(TaskInputSchema),
     defaultValues: {
-      tags: [],
+      tags: task.tags ?? [],
+      name: task.name,
+      assigneeId: task.assignee?.id,
+      pointEstimate: task.pointEstimate,
+      id: task.id,
     },
   });
+  console.log("ERRROR", error);
 
   function onSubmit(data: z.infer<typeof TaskInputSchema>) {
+    updateTask({
+      variables: {
+        input: {
+          ...data,
+        },
+      },
+    });
     toast({
       title: "You submitted the following values:",
       description: (
@@ -142,7 +155,7 @@ export const TaskUpdateForm = ({ task }: { task: Task }) => {
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select a verified email to display" />
+                          <SelectValue />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
@@ -168,11 +181,11 @@ export const TaskUpdateForm = ({ task }: { task: Task }) => {
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select a verified email to display" />
+                          <SelectValue defaultValue={task.assignee?.fullName} />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        {data.users.map((e) => (
+                        {users.users.map((e) => (
                           <SelectItem value={e.id} key={e.id}>
                             {e.fullName}
                           </SelectItem>
@@ -190,9 +203,7 @@ export const TaskUpdateForm = ({ task }: { task: Task }) => {
                   <FormItem>
                     <Popover>
                       <PopoverTrigger className="">
-                        <Button variant={"outline"} type="button">
-                          Open v
-                        </Button>
+                        <div>Open v</div>
                       </PopoverTrigger>
                       <PopoverContent>
                         {Object.values(TaskTag).map((item) => (

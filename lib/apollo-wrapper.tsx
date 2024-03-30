@@ -13,7 +13,7 @@ function makeClient() {
     // https://studio.apollographql.com/public/spacex-l4uc6p/
     uri: "https://syn-api-prod.herokuapp.com/graphql",
     headers: {
-      authorization: `Bearer ${process.env.TOKEN}`,
+      authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN}`,
     },
   });
 

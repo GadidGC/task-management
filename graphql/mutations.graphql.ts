@@ -1,16 +1,16 @@
 import { gql } from "@apollo/client";
 
 export const UPDATE_TASK = gql`
-  mutation UpdateTask($input: UpdateTaskInput!) {
-    updateTask(input: $input) {
-      id
-      name
-      createdAt
-      dueDate
-      pointEstimate
-      position
-      status
-      tags
+    mutation updateTask ($input: UpdateTaskInput!) {
+        updateTask (input: $input) {
+            createdAt
+            dueDate
+            id
+            name
+            pointEstimate
+            position
+            status
+            tags
+        }
     }
-  }
 `;
