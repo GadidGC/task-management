@@ -1,11 +1,38 @@
 import { BucketColumn } from "@/components/bucket-column";
-import { BucketList } from "@/components/bucket-list";
+import { FilterTaskInput, Status, Task } from "@/generated/graphql";
+import { GET_TASKS } from "@/graphql/queries.graphql";
+import { getClient } from "@/lib/client";
 
-export default function Home() {
+export default async function Home() {
+  const { data } = await getClient().query<{ tasks: Task[] }>({
+    query: GET_TASKS,
+    variables: {
+      input: {} as FilterTaskInput,
+    },
+  });
+
+  // Array of objects containing header and corresponding status
+  const columns = [
+    { header: "Backlog", status: Status.Backlog },
+    { header: "To Do", status: Status.Todo },
+    { header: "In Progress", status: Status.InProgress },
+    { header: "Done", status: Status.Done },
+    { header: "Cancelled", status: Status.Cancelled },
+  ];
+
+  // Function to filter tasks by status
+  const filterTasksByStatus = (status: Status) =>
+    data.tasks.filter((task) => task.status === status);
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <BucketColumn />
-      <BucketList />
+    <main className="flex min-h-screen flex-row justify-start gap-10">
+      {columns.map((column) => (
+        <BucketColumn
+          key={column.header}
+          header={column.header}
+          tasks={filterTasksByStatus(column.status)}
+        />
+      ))}
     </main>
   );
 }

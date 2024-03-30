@@ -78,16 +78,13 @@ export const columns: ColumnDef<Task>[] = [
   },
 ];
 
-export function BucketColumn() {
-  // TO DO: Ensure type inference for { tasks: Task[] }
-  const { data } = useSuspenseQuery<{ tasks: Task[] }>(GET_TASKS, {
-    variables: {
-      input: {
-        status: Status.Backlog,
-      } as FilterTaskInput,
-    },
-  });
-
+export function BucketColumn({
+  header,
+  tasks,
+}: {
+  header: string;
+  tasks: Task[];
+}) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
@@ -97,7 +94,7 @@ export function BucketColumn() {
   const [rowSelection, setRowSelection] = React.useState({});
 
   const table = useReactTable({
-    data: data.tasks,
+    data: tasks,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -117,7 +114,7 @@ export function BucketColumn() {
 
   return (
     <div>
-      Working
+      {header}
       <div className="min-w-80 max-w-3xl">
         {table.getRowModel().rows.map((row) => (
           <Card key={row.id} className="mt-2">
