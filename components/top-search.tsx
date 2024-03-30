@@ -41,71 +41,68 @@ export const TopSearch = ({
 }) => {
   return (
     <div className="w-full">
-      <Card>
-        <CardContent className="flex flex-row w-full">
-          <SearchIcon />
+      <Card className="py-2 px-4">
+        <CardContent className="flex flex-row w-full p-0">
+          <DropdownMenu>
+            <DropdownMenuTrigger className="flex flex-col justify-center px-2">
+              <FilterIcon />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>estimate</DropdownMenuSubTrigger>
+                <DropdownMenuPortal>
+                  <DropdownMenuSubContent>
+                    <DropdownMenuRadioGroup
+                      value={estimateFilter}
+                      onValueChange={(value) =>
+                        updateEstimateFilter(value as PointEstimate)
+                      }
+                    >
+                      {Object.values(PointEstimate).map((estimate, idx) => (
+                        <DropdownMenuRadioItem value={estimate} key={idx}>
+                          {estimate}
+                        </DropdownMenuRadioItem>
+                      ))}
+                    </DropdownMenuRadioGroup>
+                  </DropdownMenuSubContent>
+                </DropdownMenuPortal>
+              </DropdownMenuSub>
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>tags</DropdownMenuSubTrigger>
+                <DropdownMenuPortal>
+                  <DropdownMenuSubContent>
+                    {Object.values(TaskTag).map((tag, idx) => (
+                      <DropdownMenuCheckboxItem
+                        key={idx}
+                        checked={tagFilter.includes(tag)}
+                        onCheckedChange={() => {
+                          if (tagFilter.includes(tag)) {
+                            const filtered = [
+                              ...tagFilter.filter((e) => e != tag),
+                            ];
+                            udpateTagFilter(filtered);
+                            return;
+                          }
+                          const filtered = [...tagFilter, tag];
+                          udpateTagFilter(filtered);
+                        }}
+                      >
+                        {tag}
+                      </DropdownMenuCheckboxItem>
+                    ))}
+                  </DropdownMenuSubContent>
+                </DropdownMenuPortal>
+              </DropdownMenuSub>
+            </DropdownMenuContent>
+          </DropdownMenu>
           <div className="w-full">
             <Input
-              className="w-full"
+              className="w-full bg-transparent border-0"
               placeholder="Search"
               onChange={(event) => {
                 onSetNameFilter(event.target.value);
               }}
             />
-
-            <DropdownMenu>
-              <DropdownMenuTrigger className="flex flex-row">
-                <FilterIcon />
-                Filter
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuSub>
-                  <DropdownMenuSubTrigger>estimate</DropdownMenuSubTrigger>
-                  <DropdownMenuPortal>
-                    <DropdownMenuSubContent>
-                      <DropdownMenuRadioGroup
-                        value={estimateFilter}
-                        onValueChange={(value) =>
-                          updateEstimateFilter(value as PointEstimate)
-                        }
-                      >
-                        {Object.values(PointEstimate).map((estimate, idx) => (
-                          <DropdownMenuRadioItem value={estimate} key={idx}>
-                            {estimate}
-                          </DropdownMenuRadioItem>
-                        ))}
-                      </DropdownMenuRadioGroup>
-                    </DropdownMenuSubContent>
-                  </DropdownMenuPortal>
-                </DropdownMenuSub>
-                <DropdownMenuSub>
-                  <DropdownMenuSubTrigger>tags</DropdownMenuSubTrigger>
-                  <DropdownMenuPortal>
-                    <DropdownMenuSubContent>
-                      {Object.values(TaskTag).map((tag, idx) => (
-                        <DropdownMenuCheckboxItem
-                          key={idx}
-                          checked={tagFilter.includes(tag)}
-                          onCheckedChange={() => {
-                            if (tagFilter.includes(tag)) {
-                              const filtered = [
-                                ...tagFilter.filter((e) => e != tag),
-                              ];
-                              udpateTagFilter(filtered);
-                              return;
-                            }
-                            const filtered = [...tagFilter, tag];
-                            udpateTagFilter(filtered);
-                          }}
-                        >
-                          {tag}
-                        </DropdownMenuCheckboxItem>
-                      ))}
-                    </DropdownMenuSubContent>
-                  </DropdownMenuPortal>
-                </DropdownMenuSub>
-              </DropdownMenuContent>
-            </DropdownMenu>
           </div>
           <Link href={"/settings"}>
             <Avatar>
@@ -116,12 +113,12 @@ export const TopSearch = ({
         </CardContent>
       </Card>
 
-      <div className="w-full flex justify-between pr-7 py-2">
+      <div className="w-full flex justify-between pr-7 py-4">
         <div className="flex gap-4">
-          <Button>
+          <Button variant={"outline"}>
             <LayoutList></LayoutList>
           </Button>
-          <Button>
+          <Button variant={"outline"} className="">
             <LayoutDashboardIcon />
           </Button>
         </div>

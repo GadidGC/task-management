@@ -171,13 +171,13 @@ export function BucketColumn({
 
   return (
     <div className="flex flex-col flex-1">
-      {header}
+      <p className="text-lg font-medium">{header}</p>
       <div className="min-w-64 max-w-3xl overflow-y-auto flex flex-col">
         {table.getRowModel().rows.map((row) => (
           <Draggable id={row.getValue("id")} key={row.getValue("id")}>
             <Card className="w-full">
               <CardHeader className="flex flex-row justify-between align-middle items-center">
-                <CardTitle>{row.getValue("name")}</CardTitle>
+                <p className="text-lg font-medium">{row.getValue("name")}</p>
                 <DropdownMenu>
                   <DropdownMenuTrigger>
                     <DotsIcon />
