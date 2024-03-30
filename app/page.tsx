@@ -4,6 +4,7 @@ import { TopSearch } from "@/components/top-search";
 import { FilterTaskInput, Status, Task } from "@/graphql/types";
 import { GET_TASKS } from "@/graphql/queries.graphql";
 import { getClient } from "@/lib/client";
+import { ErrorBoundary } from "next/dist/client/components/error-boundary";
 
 export default async function Home() {
   const { data } = await getClient().query<{ tasks: Task[] }>({
