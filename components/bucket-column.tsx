@@ -28,6 +28,7 @@ import {
   CardTitle,
 } from "./ui/card";
 import { TaskForm } from "./task-form";
+import { checkTaskStatus } from "@/lib/utils";
 
 export const columns: ColumnDef<Task>[] = [
   {
@@ -133,7 +134,10 @@ export function BucketColumn({
               />
             </CardHeader>
             <CardContent>
-              <p>{row.getValue("pointEstimate")}</p>
+              <div className="flex flex-row justify-between">
+                <p>{row.getValue("pointEstimate")}</p>
+                {checkTaskStatus(new Date(row.getValue("dueDate")))}
+              </div>
               {(row.getValue("tags") as TaskTag[]).map((e) => (
                 <Badge variant="outline" key={e}>
                   {e}
