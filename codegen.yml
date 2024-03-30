@@ -1,6 +1,6 @@
 schema: https://syn-api-prod.herokuapp.com/graphql # point to your GraphQL server
 generates:
-  generated/graphql.tsx: # Where you want the generated files to go
+  graphql/types.ts: # Where you want the generated files to go
     plugins:
       - typescript # For base TypeScript types
       - typescript-operations # For operation types (query/mutation/subscription)

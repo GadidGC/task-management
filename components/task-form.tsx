@@ -24,7 +24,7 @@ import {
   Task,
   TaskTag,
   User,
-} from "@/generated/graphql";
+} from "@/graphql/types";
 import { CREATE_TASK, UPDATE_TASK } from "@/graphql/mutations.graphql";
 import { GET_USERS } from "@/graphql/queries.graphql";
 import { cn } from "@/lib/utils";

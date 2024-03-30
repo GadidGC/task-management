@@ -1,7 +1,7 @@
 import { BucketColumn } from "@/components/bucket-column";
 import { SideNavigation } from "@/components/side-navigation";
 import { TopSearch } from "@/components/top-search";
-import { FilterTaskInput, Status, Task } from "@/generated/graphql";
+import { FilterTaskInput, Status, Task } from "@/graphql/types";
 import { GET_TASKS } from "@/graphql/queries.graphql";
 import { getClient } from "@/lib/client";
 

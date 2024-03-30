@@ -15,13 +15,7 @@ import {
 } from "@tanstack/react-table";
 import * as React from "react";
 
-import {
-  FilterTaskInput,
-  Status,
-  Task,
-  TaskTag,
-  User,
-} from "@/generated/graphql";
+import { FilterTaskInput, Status, Task, TaskTag, User } from "@/graphql/types";
 import { GET_TASKS } from "@/graphql/queries.graphql";
 import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
