@@ -237,11 +237,11 @@ export const TaskForm = ({
                 name="tags"
                 render={() => (
                   <FormItem>
-                    <Popover>
-                      <PopoverTrigger className="flex justify-start text-sm pl-4 items-center py-[10px] bg-gray-600/50 min-w-36 rounded-[15px]">
+                    <Popover data-no-dnd="true">
+                      <PopoverTrigger className="flex justify-start text-sm pl-4 items-center py-[10px] bg-gray-600/50 min-w-36 rounded-[15px]" data-no-dnd="true">
                         Label
                       </PopoverTrigger>
-                      <PopoverContent>
+                      <PopoverContent data-no-dnd="true">
                         {Object.values(TaskTag).map((item) => (
                           <FormField
                             key={item}
@@ -286,10 +286,11 @@ export const TaskForm = ({
                 )}
               />
               <FormField
+                data-no-dnd="true"
                 control={form.control}
                 name="dueDate"
                 render={({ field }) => (
-                  <FormItem className="flex flex-col">
+                  <FormItem className="flex flex-col" data-no-dnd="true" >
                     <Popover>
                       <PopoverTrigger asChild>
                         <FormControl>
@@ -309,12 +310,13 @@ export const TaskForm = ({
                           </Button>
                         </FormControl>
                       </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0" align="start">
+                      <PopoverContent className="w-auto p-0" align="start" data-no-dnd="true">
                         <Calendar
                           mode="single"
                           selected={field.value}
                           onSelect={field.onChange}
                           initialFocus
+                          data-no-dnd="true"
                         />
                       </PopoverContent>
                     </Popover>
