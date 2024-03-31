@@ -1,3 +1,5 @@
+export const runtime = 'edge' // 'nodejs' (default) | 'edge'
+  
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
