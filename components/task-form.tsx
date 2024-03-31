@@ -69,12 +69,13 @@ export const TaskForm = ({
     defaultValues:
       variant.type === "UPDATE"
         ? {
-            tags: variant.value.tags ?? [],
-            name: variant.value.name,
-            assigneeId: variant.value.assignee?.id,
-            pointEstimate: variant.value.pointEstimate,
-            id: variant.value.id,
-          }
+          tags: variant.value.tags ?? [],
+          name: variant.value.name,
+          assigneeId: variant.value.assignee?.id,
+          pointEstimate: variant.value.pointEstimate,
+          id: variant.value.id,
+          dueDate: new Date(variant.value.dueDate),
+        }
         : { tags: [], status: Status.Backlog },
   });
 
@@ -192,7 +193,7 @@ export const TaskForm = ({
                       </PopoverTrigger>
                       <PopoverContent>
                         {Object.values(TaskTag).map((item) => (
-                          <FormField
+                          < FormField
                             key={item}
                             control={form.control}
                             name="tags"
@@ -208,14 +209,14 @@ export const TaskForm = ({
                                       onCheckedChange={(checked) => {
                                         return checked
                                           ? field.onChange([
-                                              ...field.value,
-                                              item,
-                                            ])
+                                            ...field.value,
+                                            item,
+                                          ])
                                           : field.onChange(
-                                              field.value?.filter(
-                                                (value) => value !== item,
-                                              ),
-                                            );
+                                            field.value?.filter(
+                                              (value) => value !== item,
+                                            ),
+                                          );
                                       }}
                                     />
                                   </FormControl>
@@ -226,7 +227,7 @@ export const TaskForm = ({
                               );
                             }}
                           />
-                        ))}{" "}
+                        ))}
                       </PopoverContent>
                     </Popover>
 

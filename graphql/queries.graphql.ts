@@ -20,6 +20,11 @@ export const GET_TASKS = gql`
       position
       status
       tags
+      assignee {
+        id
+        fullName
+        avatar
+      }
     }
   }
 `;

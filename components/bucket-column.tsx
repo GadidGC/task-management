@@ -152,6 +152,10 @@ export const columns: ColumnDef<Task>[] = [
     accessorKey: "position",
     header: "Position",
   },
+  {
+    accessorKey: "assignee",
+    header: "Assignee",
+  }
 ];
 
 export function BucketColumn({
@@ -211,7 +215,7 @@ export function BucketColumn({
                         type: "UPDATE",
                         value: {
                           creator: row.getValue("creator"),
-                          assignee: row.getValue("name"),
+                          assignee: row.getValue("assignee"),
                           createdAt: row.getValue("createdAt"),
                           dueDate: row.getValue("dueDate"),
                           id: row.getValue("id"),
@@ -225,7 +229,7 @@ export function BucketColumn({
                     />
                     <AlertDialogDemo
                       accept={() => handleOnClickDelete(row.getValue("id"))}
-                      cancel={() => {}}
+                      cancel={() => { }}
                     />
                   </DropdownMenuContent>
                 </DropdownMenu>
