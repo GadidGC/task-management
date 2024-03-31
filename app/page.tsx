@@ -147,10 +147,10 @@ const handler = ({ nativeEvent: event }: MouseEvent | TouchEvent) => {
   return true;
 };
 
-export class MouseSensor extends LibMouseSensor {
+class MouseSensor extends LibMouseSensor {
   static activators = [{ eventName: 'onMouseDown', handler }] as typeof LibMouseSensor['activators'];
 }
 
-export class TouchSensor extends LibTouchSensor {
+class TouchSensor extends LibTouchSensor {
   static activators = [{ eventName: 'onTouchStart', handler }] as typeof LibTouchSensor['activators'];
 }
