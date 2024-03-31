@@ -51,7 +51,7 @@ export const TaskCard = ({ task }: { task: Task }) => {
     <Card className="w-full">
       <CardHeader className="flex flex-row justify-between align-middle items-center">
         <p className="text-lg font-medium">{task.name}</p>
-        <DropdownMenu>
+        <DropdownMenu data-no-dnd="true">
           <DropdownMenuTrigger>
             <DotsIcon />
           </DropdownMenuTrigger>
