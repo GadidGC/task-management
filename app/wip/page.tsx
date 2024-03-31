@@ -30,7 +30,7 @@ export default function Wip() {
       <Card  className="p-5">
         <CardContent className="text-2xl flex flex-col justify-center w-full items-center text-center align-middle">
            <ConstructionIcon size={100}/>
-           <div>Working in progress</div>
+           <div>Work in progress</div>
         </CardContent>
       </Card>
     </main>
