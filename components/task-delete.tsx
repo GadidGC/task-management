@@ -52,14 +52,14 @@ export function TaskDelete({ taskId }: { taskId: string }) {
   };
 
   return (
-    <AlertDialog>
+    <AlertDialog data-no-dnd="true">
       <AlertDialogTrigger asChild>
-        <div className="select-none bg-background p-2 px-4 w-full flex items-center gap-2 mt-1">
+        <div className="select-none bg-background p-2 px-4 w-full flex items-center gap-2 mt-1 " data-no-dnd="true" >
           <Trash2Icon size={15} />
           Delete
         </div>
       </AlertDialogTrigger>
-      <AlertDialogContent>
+      <AlertDialogContent data-no-dnd="true">
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
