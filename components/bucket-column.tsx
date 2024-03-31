@@ -17,6 +17,7 @@ import {
 import { DELETE_TASK } from "@/graphql/mutations.graphql";
 import {
   DeleteTaskInput,
+  Mutation,
   MutationDeleteTaskArgs,
   Task,
   TaskTag,
@@ -29,7 +30,7 @@ import {
   convertEstimateToReadbleNumber,
   generateDiceBearUrl,
 } from "@/lib/utils";
-import { useMutation } from "@apollo/client";
+import { useApolloClient, useMutation } from "@apollo/client";
 import { useState } from "react";
 import { DotsIcon } from "./icons";
 import { TaskForm } from "./task-form";
@@ -58,6 +59,7 @@ import { AlarmClockIcon } from "lucide-react";
 import { Draggable } from "./draggable";
 import { format } from "date-fns";
 import Image from "next/image";
+import { GET_TASKS } from "@/graphql/queries.graphql";
 
 function TaskOnTime({ dueDate }: { dueDate: Date }) {
   if (checkTaskStatus(dueDate) === TASK_STATUS_TIME.LATE) {
@@ -168,8 +170,24 @@ export function BucketColumn({
   header: string;
   tasks: Task[];
 }) {
+  const client = useApolloClient();
   const [mutate, { loading, error }] =
-    useMutation<MutationDeleteTaskArgs>(DELETE_TASK);
+    useMutation<Mutation>(DELETE_TASK, {
+      update(cache, { data }) {
+        const existingTasks: { tasks: Task[] } = cache.readQuery({ query: GET_TASKS, variables: { input: {} } }) ?? { tasks: [] };
+        const updateTaks = existingTasks.tasks.filter((task) => task.id !== data?.deleteTask.id);
+
+        cache.writeQuery({
+          query: GET_TASKS,
+          data: {
+            tasks: updateTaks,
+          },
+          variables: {
+            input: {}
+          }
+        });
+      }
+    });
 
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
