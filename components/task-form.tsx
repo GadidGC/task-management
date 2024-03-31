@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogClose, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import {
   Form,
   FormControl,
@@ -16,18 +16,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { CREATE_TASK, UPDATE_TASK } from "@/graphql/mutations.graphql";
+import { GET_TASKS, GET_USERS } from "@/graphql/queries.graphql";
 import {
   Mutation,
-  MutationCreateTaskArgs,
-  MutationUpdateTaskArgs,
   PointEstimate,
   Status,
   Task,
   TaskTag,
-  User,
+  User
 } from "@/graphql/types";
-import { CREATE_TASK, UPDATE_TASK } from "@/graphql/mutations.graphql";
-import { GET_TASKS, GET_USERS } from "@/graphql/queries.graphql";
 import { cn } from "@/lib/utils";
 import { useMutation, useSuspenseQuery } from "@apollo/client";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -40,7 +38,6 @@ import { Checkbox } from "./ui/checkbox";
 import { Input } from "./ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { toast } from "./ui/use-toast";
-import { DotsIcon } from "./icons";
 
 const TaskFormSchema = z.object({
   name: z.string().min(1, {
@@ -146,14 +143,14 @@ export const TaskForm = ({
                 control={form.control}
                 name="pointEstimate"
                 render={({ field }) => (
-                  <FormItem>
+                  <FormItem >
                     <Select
                       onValueChange={field.onChange}
                       defaultValue={field.value}
                     >
                       <FormControl>
-                        <SelectTrigger>
-                          <SelectValue />
+                        <SelectTrigger className="bg-gray-600/50 rounded-[15px] flex min-w-36">
+                          <SelectValue placeholder="Estimate" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
@@ -178,13 +175,13 @@ export const TaskForm = ({
                       defaultValue={field.value}
                     >
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger className="bg-gray-600/50 rounded-[15px] flex min-w-36">
                           {variant.type === "UPDATE" ? (
                             <SelectValue
                               defaultValue={variant.value.assignee?.fullName}
                             />
                           ) : (
-                            <SelectValue />
+                            <SelectValue placeholder="Assignee" />
                           )}
                         </SelectTrigger>
                       </FormControl>
@@ -206,8 +203,8 @@ export const TaskForm = ({
                 render={() => (
                   <FormItem>
                     <Popover>
-                      <PopoverTrigger className="">
-                        <div>Open v</div>
+                      <PopoverTrigger className="flex justify-start text-sm pl-4 items-center h-full bg-gray-600/50 min-w-36 rounded-[15px]">
+                        Label
                       </PopoverTrigger>
                       <PopoverContent>
                         {Object.values(TaskTag).map((item) => (
@@ -264,8 +261,8 @@ export const TaskForm = ({
                           <Button
                             variant={"outline"}
                             className={cn(
-                              "w-[240px] pl-3 text-left font-normal",
-                              !field.value && "text-muted-foreground",
+                              "w-[240px] pl-3 text-left font-normal  bg-gray-600/50 ",
+                              !field.value,
                             )}
                           >
                             {field.value ? (
@@ -295,10 +292,11 @@ export const TaskForm = ({
               />
             </div>
             <div className="flex float-right pt-4 gap-5">
-              <Button size={"sm"} type="button">
-                Cancel
-              </Button>
-
+              <DialogClose asChild>
+                <Button size={"sm"} type="button" variant={'outline'}>
+                  Cancel
+                </Button>
+              </DialogClose>
               <Button size="sm" type="submit">
                 {(variant.type === "CREATE" ?? "Create", "Update")}
               </Button>
