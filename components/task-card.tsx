@@ -48,21 +48,22 @@ function TaskOnTime({ dueDate }: { dueDate: Date }) {
 
 export const TaskCard = ({ task }: { task: Task }) => {
   return (
-    <Card className="w-full">
+    <Card className="w-full" >
       <CardHeader className="flex flex-row justify-between align-middle items-center">
         <p className="text-lg font-medium">{task.name}</p>
         <DropdownMenu data-no-dnd="true">
-          <DropdownMenuTrigger>
+          <DropdownMenuTrigger data-no-dnd="true">
             <DotsIcon />
           </DropdownMenuTrigger>
-          <DropdownMenuContent>
+          <DropdownMenuContent data-no-dnd="true">
             <TaskForm
+              data-no-dnd="true"
               variant={{
                 type: "UPDATE",
                 value: task,
               }}
             />
-            <TaskDelete taskId={task.id} />
+            <TaskDelete data-no-dnd="true" taskId={task.id} />
           </DropdownMenuContent>
         </DropdownMenu>
       </CardHeader>

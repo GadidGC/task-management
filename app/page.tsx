@@ -82,7 +82,7 @@ export default function Home() {
   }
 
   return (
-    <main className="flex max-h-screen flex-row justify-start gap-10 p-7 min-h-screen">
+    <main className="flex max-h-screen flex-row justify-start gap-10 p-7 min-h-screen" style={{overflowX: "auto"}}>
       <SideNavigation />
       <div className="flex flex-col w-full  overflow-x-auto">
         <TopSearch

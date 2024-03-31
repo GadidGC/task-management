@@ -146,7 +146,7 @@ export const TaskForm = ({
   }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={setOpen} data-no-dnd="true">
       <DialogTrigger asChild className="z-50">
         {variant.type === "CREATE" ? (
           <div className="bg-primary text-primary-foreground hover:bg-primary/90 flex justify-center p-2 rounded-[10px]">
@@ -158,9 +158,9 @@ export const TaskForm = ({
           </div>
         )}
       </DialogTrigger>
-      <DialogContent className="max-w-3xl z-50">
+      <DialogContent className="max-w-3xl z-50" data-no-dnd="true">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
+          <form onSubmit={form.handleSubmit(onSubmit)} data-no-dnd="true">
             <FormField
               control={form.control}
               name="name"
