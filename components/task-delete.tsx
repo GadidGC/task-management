@@ -53,7 +53,7 @@ export function TaskDelete({ taskId }: { taskId: string }) {
 
   return (
     <AlertDialog data-no-dnd="true">
-      <AlertDialogTrigger asChild>
+      <AlertDialogTrigger asChild data-no-dnd="true" >
         <div className="select-none bg-background p-2 px-4 w-full flex items-center gap-2 mt-1 " data-no-dnd="true" >
           <Trash2Icon size={15} />
           Delete

@@ -173,7 +173,7 @@ export const TaskForm = ({
                 </FormItem>
               )}
             />
-            <div className="flex flex-row w-full justify-between pt-4">
+            <div className="flex flex-col md:flex-row w-full justify-between pt-4">
               <FormField
                 control={form.control}
                 name="pointEstimate"
