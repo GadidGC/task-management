@@ -94,7 +94,7 @@ export const TaskForm = ({
           id: variant.value.id,
           dueDate: new Date(variant.value.dueDate),
         }
-        : { tags: [], status: Status.Backlog },
+        : { tags: [], status: Status.Backlog, name: "New Task" },
   });
 
   function onSubmit(data: z.infer<typeof TaskFormSchema>) {
@@ -135,7 +135,7 @@ export const TaskForm = ({
               render={({ field }) => (
                 <FormItem className="w-full">
                   <FormControl>
-                    <Input placeholder="shadcn" {...field} />
+                    <Input placeholder="Task Name" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

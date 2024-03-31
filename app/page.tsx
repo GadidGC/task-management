@@ -63,7 +63,7 @@ export default function Home() {
   const sensors = useSensors(mouseSensor, pointerSensor);
 
   const [mutate, { loading, error }] =
-    useMutation<MutationUpdateTaskArgs>(UPDATE_TASK);
+    useMutation(UPDATE_TASK);
 
   // Array of objects containing header and corresponding status
   const columns = [
