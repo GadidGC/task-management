@@ -1,6 +1,7 @@
 import { LayoutDashboardIcon, LayoutList } from "lucide-react";
 import { RavnIcon } from "./icons";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import Link from "next/link";
 
 export const SideNavigation = () => {
   return (
@@ -11,13 +12,13 @@ export const SideNavigation = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="flex gap-5 flex-col">
-        <div className="pr-12 flex flex-row gap-3">
+        <Link href={"/wip"}  className="pr-12 flex flex-row gap-3">
           <LayoutDashboardIcon></LayoutDashboardIcon> DASHBOARD
-        </div>
-        <div className="pr-12 flex flex-row gap-3">
+        </Link>
+        <Link href={"/wip"} className="pr-12 flex flex-row gap-3">
           <LayoutList></LayoutList>
           MY TASK
-        </div>
+        </Link>
       </CardContent>
     </Card>
   );

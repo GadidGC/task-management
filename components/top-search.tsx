@@ -114,13 +114,13 @@ export const TopSearch = ({
       </Card>
 
       <div className="w-full flex justify-between pr-7 py-4">
-        <div className="flex gap-4">
-          <Button variant={"outline"}>
+        <div className="flex gap-4 p-2">
+          <Link href={"/wip"}>
             <LayoutList></LayoutList>
-          </Button>
-          <Button variant={"outline"} className="">
+          </Link>
+          <Link href={"/wip"}>
             <LayoutDashboardIcon />
-          </Button>
+          </Link>
         </div>
 
         <TaskForm variant={{ type: "CREATE" }} />
