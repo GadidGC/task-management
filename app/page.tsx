@@ -35,7 +35,7 @@ const UpdateTaskStatusSchema = z.object({
 });
 
 export default function Home() {
-  const { data, refetch } = useQuery<{ tasks: Task[] }>(GET_TASKS, {
+  const { data, refetch, loading } = useQuery<{ tasks: Task[] }>(GET_TASKS, {
     variables: {
       input: {},
     },
@@ -62,7 +62,7 @@ export default function Home() {
 
   const sensors = useSensors(mouseSensor, pointerSensor);
 
-  const [mutate, { loading, error }] =
+  const [mutate] =
     useMutation(UPDATE_TASK);
 
   // Array of objects containing header and corresponding status
@@ -145,6 +145,7 @@ export default function Home() {
                 status={column.status}
               >
                 <BucketColumn
+                  isLoading={loading}
                   key={column.header}
                   header={column.header}
                   tasks={filterTasksByStatus(column.status)}

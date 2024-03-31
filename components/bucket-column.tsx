@@ -60,6 +60,7 @@ import { Draggable } from "./draggable";
 import { format } from "date-fns";
 import Image from "next/image";
 import { GET_TASKS } from "@/graphql/queries.graphql";
+import { Skeleton } from "./ui/skeleton";
 
 function TaskOnTime({ dueDate }: { dueDate: Date }) {
   if (checkTaskStatus(dueDate) === TASK_STATUS_TIME.LATE) {
@@ -166,9 +167,11 @@ export const columns: ColumnDef<Task>[] = [
 export function BucketColumn({
   header,
   tasks,
+  isLoading,
 }: {
   header: string;
   tasks: Task[];
+  isLoading: boolean;
 }) {
   const client = useApolloClient();
   const [mutate, { loading, error }] =
@@ -221,7 +224,7 @@ export function BucketColumn({
     <div className="flex flex-col flex-1">
       <p className="text-lg font-medium">{header}</p>
       <div className="min-w-64 max-w-3xl  flex flex-col overflow-visible relative">
-        {table.getRowModel().rows.map((row) => (
+        {isLoading ? <Skeleton className="w-full min-h-60 mt-2 rounded-md bg-gray-600/50" /> : table.getRowModel().rows.map((row) => (
           <Draggable id={row.getValue("id")} key={row.getValue("id")}>
             <Card className="w-full">
               <CardHeader className="flex flex-row justify-between align-middle items-center">
