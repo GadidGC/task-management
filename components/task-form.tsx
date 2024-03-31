@@ -44,6 +44,7 @@ import { Checkbox } from "./ui/checkbox";
 import { Input } from "./ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { toast } from "./ui/use-toast";
+import { useState } from "react";
 
 const TaskFormSchema = z.object({
   name: z.string().min(1, {
@@ -62,6 +63,8 @@ export const TaskForm = ({
 }: {
   variant: { type: "CREATE" } | { type: "UPDATE"; value: Task };
 }) => {
+  const [open, setOpen] = useState(false);
+
   const [mutate] = useMutation<Mutation>(
     variant.type === "CREATE" ? CREATE_TASK : UPDATE_TASK,
     variant.type === "CREATE"
@@ -116,7 +119,14 @@ export const TaskForm = ({
             id: variant.value.id,
             dueDate: new Date(variant.value.dueDate),
           }
-        : { tags: [], status: Status.Backlog, name: "New Task" },
+        : {
+            tags: [],
+            status: Status.Backlog,
+            name: "New Task",
+            assigneeId: undefined,
+            dueDate: undefined,
+            pointEstimate: undefined,
+          },
   });
 
   function onSubmit(data: z.infer<typeof TaskFormSchema>) {
@@ -131,10 +141,12 @@ export const TaskForm = ({
     if (variant.type === "CREATE") {
       form.reset();
     }
+
+    setOpen(false);
   }
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild className="z-50">
         {variant.type === "CREATE" ? (
           <div className="bg-primary text-primary-foreground hover:bg-primary/90 flex justify-center p-2 rounded-[10px]">
@@ -226,7 +238,7 @@ export const TaskForm = ({
                 render={() => (
                   <FormItem>
                     <Popover>
-                      <PopoverTrigger className="flex justify-start text-sm pl-4 items-center h-full bg-gray-600/50 min-w-36 rounded-[15px]">
+                      <PopoverTrigger className="flex justify-start text-sm pl-4 items-center py-[10px] bg-gray-600/50 min-w-36 rounded-[15px]">
                         Label
                       </PopoverTrigger>
                       <PopoverContent>
