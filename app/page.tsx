@@ -38,7 +38,7 @@ export default function Home() {
   const mouseSensor = useSensor(MouseSensor, {
     // Press delay of 200ms, with tolerance of 5px of movement
     activationConstraint: {
-      delay: 200,
+      delay: 50,
       tolerance: 10,
     },
   });
@@ -46,7 +46,7 @@ export default function Home() {
   const pointerSensor = useSensor(PointerSensor, {
     // Press delay of 200ms, with tolerance of 5px of movement
     activationConstraint: {
-      delay: 200,
+      delay: 50,
       tolerance: 10,
     },
   });
