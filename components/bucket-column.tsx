@@ -25,7 +25,9 @@ import {
 import {
   TASK_STATUS_TIME,
   checkTaskStatus,
+  convertDeprecatedURL,
   convertEstimateToReadbleNumber,
+  generateDiceBearUrl,
 } from "@/lib/utils";
 import { useMutation } from "@apollo/client";
 import { useState } from "react";
@@ -55,6 +57,7 @@ import {
 import { AlarmClockIcon } from "lucide-react";
 import { Draggable } from "./draggable";
 import { format } from "date-fns";
+import Image from "next/image";
 
 function TaskOnTime({ dueDate }: { dueDate: Date }) {
   if (checkTaskStatus(dueDate) === TASK_STATUS_TIME.LATE) {
@@ -254,9 +257,9 @@ export function BucketColumn({
               <CardFooter>
                 <Avatar>
                   <AvatarImage
-                    src={(row.getValue("assignee") as User)?.avatar ?? ""}
+                    src={convertDeprecatedURL((row.getValue("assignee") as User)?.avatar ?? "", (row.getValue("assignee") as User)?.fullName ?? "")}
                   />
-                  <AvatarFallback>-</AvatarFallback>
+                  <AvatarFallback><Image src={generateDiceBearUrl((row.getValue("assignee") as User)?.fullName ?? "")} width={64} alt={"user-icon"} height={64} />  </AvatarFallback>
                 </Avatar>
               </CardFooter>
             </Card>
