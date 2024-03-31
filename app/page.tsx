@@ -82,7 +82,7 @@ export default function Home() {
   }
 
   return (
-    <main className="flex max-h-screen flex-row justify-start gap-10 p-7 min-h-screen" style={{overflowX: "auto"}}>
+    <main className="flex max-h-screen flex-col md:flex-row justify-start gap-10 p-7 min-h-screen  overflow-x-auto" style={{overflowX: "auto"}}>
       <SideNavigation />
       <div className="flex flex-col w-full  overflow-x-auto">
         <TopSearch
@@ -110,7 +110,7 @@ export default function Home() {
         />
 
         <DndContext onDragEnd={handleDragEnd} sensors={sensors}>
-          <div className="flex flex-row gap-5 flex-1 w-full h-full overflow-y-auto ">
+          <div className="flex flex-col md:flex-row gap-5 flex-1 w-full h-full overflow-y-scroll md:overflow-y-auto">
             {columns.map((column) => (
               <Droppable
                 key={column.status}

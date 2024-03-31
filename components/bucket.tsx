@@ -100,9 +100,9 @@ export function BucketColumn({
   });
 
   return (
-    <div className="flex flex-col flex-1">
+    <div className="flex flex-col flex-1 min-h-20">
       <p className="text-lg font-medium">{header}</p>
-      <div className="min-w-64 max-w-3xl  flex flex-col overflow-visible relative">
+      <div className="max-w-72 md:max-w-3xl  flex flex-col overflow-visible relative">
         {isLoading ? (
           <Skeleton className="w-full min-h-60 mt-2 rounded-md bg-gray-600/50" />
         ) : (
