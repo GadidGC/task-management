@@ -61,6 +61,7 @@ import { format } from "date-fns";
 import Image from "next/image";
 import { GET_TASKS } from "@/graphql/queries.graphql";
 import { Skeleton } from "./ui/skeleton";
+import { toast } from "./ui/use-toast";
 
 function TaskOnTime({ dueDate }: { dueDate: Date }) {
   if (checkTaskStatus(dueDate) === TASK_STATUS_TIME.LATE) {
@@ -96,7 +97,7 @@ export function AlertDialogDemo({
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <div className="z-50 select-none bg-background p-2 px-4 w-full flex items-center gap-2 mt-1"><Trash2Icon size={15} />Delete</div>
+        <div className="select-none bg-background p-2 px-4 w-full flex items-center gap-2 mt-1"><Trash2Icon size={15} />Delete</div>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
@@ -173,8 +174,7 @@ export function BucketColumn({
   tasks: Task[];
   isLoading: boolean;
 }) {
-  const client = useApolloClient();
-  const [mutate, { loading, error }] =
+  const [mutate] =
     useMutation<Mutation>(DELETE_TASK, {
       update(cache, { data }) {
         const existingTasks: { tasks: Task[] } = cache.readQuery({ query: GET_TASKS, variables: { input: {} } }) ?? { tasks: [] };
@@ -189,6 +189,11 @@ export function BucketColumn({
             input: {}
           }
         });
+      },
+      onCompleted: () => {
+        toast({
+          title: "Task deleted",
+        })
       }
     });
 

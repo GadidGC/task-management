@@ -6,15 +6,15 @@ export function Droppable(props: {
   id: string;
   status: Status;
   children:
-    | string
-    | number
-    | boolean
-    | React.ReactElement<any, string | React.JSXElementConstructor<any>>
-    | Iterable<React.ReactNode>
-    | React.ReactPortal
-    | Promise<React.AwaitedReactNode>
-    | null
-    | undefined;
+  | string
+  | number
+  | boolean
+  | React.ReactElement<any, string | React.JSXElementConstructor<any>>
+  | Iterable<React.ReactNode>
+  | React.ReactPortal
+  | Promise<React.AwaitedReactNode>
+  | null
+  | undefined;
 }) {
   const { isOver, setNodeRef } = useDroppable({
     id: props.id,
@@ -24,7 +24,7 @@ export function Droppable(props: {
     },
   });
   const style = {
-    color: isOver ? "green" : undefined,
+    color: isOver ? "gray" : undefined,
   };
 
   return (

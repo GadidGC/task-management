@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 
 export const SideNavigation = () => {
   return (
-    <Card className="px-4">
+    <Card className="px-4 ">
       <CardHeader className="pb-16">
         <CardTitle className="flex justify-center">
           <RavnIcon />

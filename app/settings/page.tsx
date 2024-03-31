@@ -8,8 +8,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { GET_PROFILE } from "@/graphql/queries.graphql";
 import { User } from "@/graphql/types";
 import { getClient } from "@/lib/client";

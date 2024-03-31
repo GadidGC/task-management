@@ -74,7 +74,18 @@ export const TaskForm = ({
           }
         });
       }
-    } : undefined
+      , onCompleted: () => {
+        toast({
+          title: "Task created"
+        })
+      }
+    } : {
+    onCompleted: () => {
+      toast({
+        title: "Task updated"
+      })
+    }
+  }
   );
 
   const { data: users } = useSuspenseQuery<{ users: User[] }>(GET_USERS);
@@ -102,14 +113,7 @@ export const TaskForm = ({
         },
       },
     });
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
+    form.reset();
   }
 
   return (
@@ -279,9 +283,6 @@ export const TaskForm = ({
                           mode="single"
                           selected={field.value}
                           onSelect={field.onChange}
-                          disabled={(date) =>
-                            date > new Date() || date < new Date("1900-01-01")
-                          }
                           initialFocus
                         />
                       </PopoverContent>

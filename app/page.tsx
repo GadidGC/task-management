@@ -63,7 +63,11 @@ export default function Home() {
   const sensors = useSensors(mouseSensor, pointerSensor);
 
   const [mutate] =
-    useMutation(UPDATE_TASK);
+    useMutation(UPDATE_TASK, {
+      onCompleted: () => {
+        toast({ title: "Task updated" })
+      }
+    });
 
   // Array of objects containing header and corresponding status
   const columns = [
@@ -86,14 +90,6 @@ export default function Home() {
         },
       },
     });
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
   }
 
   function handleDragEnd(event: DragEndEvent) {
@@ -109,7 +105,7 @@ export default function Home() {
   }
 
   return (
-    <main className="flex max-h-screen flex-row justify-start gap-10 p-7">
+    <main className="flex max-h-screen flex-row justify-start gap-10 p-7 min-h-screen">
       <SideNavigation />
       <div className="flex flex-col w-full  overflow-x-auto">
         <TopSearch
