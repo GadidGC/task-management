@@ -26,6 +26,11 @@ export const CREATE_TASK = gql`
           position
           status
           tags
+          assignee {
+            id
+            fullName
+            avatar
+          }
       }
   }
 `;

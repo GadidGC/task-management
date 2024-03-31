@@ -17,6 +17,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import {
+  Mutation,
   MutationCreateTaskArgs,
   MutationUpdateTaskArgs,
   PointEstimate,
@@ -26,7 +27,7 @@ import {
   User,
 } from "@/graphql/types";
 import { CREATE_TASK, UPDATE_TASK } from "@/graphql/mutations.graphql";
-import { GET_USERS } from "@/graphql/queries.graphql";
+import { GET_TASKS, GET_USERS } from "@/graphql/queries.graphql";
 import { cn } from "@/lib/utils";
 import { useMutation, useSuspenseQuery } from "@apollo/client";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -58,8 +59,25 @@ export const TaskForm = ({
 }: {
   variant: { type: "CREATE" } | { type: "UPDATE"; value: Task };
 }) => {
-  const [mutate, { loading, error }] = useMutation<MutationUpdateTaskArgs>(
-    variant.type === "CREATE" ? CREATE_TASK : UPDATE_TASK,
+  const [mutate, { loading, error }] = useMutation<Mutation>(
+    variant.type === "CREATE" ? CREATE_TASK : UPDATE_TASK, variant.type === "CREATE" ? {
+      update(cache, { data }) {
+        if (!data) { return }
+
+        const existingTasks: { tasks: Task[] } = cache.readQuery({ query: GET_TASKS, variables: { input: {} } }) ?? { tasks: [] };
+        const update = [...existingTasks.tasks, { ...data.createTask }];
+
+        cache.writeQuery({
+          query: GET_TASKS,
+          data: {
+            tasks: update,
+          },
+          variables: {
+            input: {}
+          }
+        });
+      }
+    } : undefined
   );
 
   const { data: users } = useSuspenseQuery<{ users: User[] }>(GET_USERS);
