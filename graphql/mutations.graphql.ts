@@ -10,8 +10,12 @@ export const UPDATE_TASK = gql`
             pointEstimate
             position
             status
-            tags
-        }
+            assignee {
+                id
+                fullName
+                avatar
+            }
+        } 
     }
 `;
 
