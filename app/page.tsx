@@ -1,28 +1,19 @@
 "use client";
 
-export const dynamic = "force-dynamic";
-
-import { BucketColumn } from "@/components/bucket-column";
+import { BucketColumn } from "@/components/bucket";
 import { Droppable } from "@/components/droppable";
 import { SideNavigation } from "@/components/side-navigation";
 import { TopSearch } from "@/components/top-search";
 import { toast } from "@/components/ui/use-toast";
 import { UPDATE_TASK } from "@/graphql/mutations.graphql";
 import { GET_TASKS } from "@/graphql/queries.graphql";
-import {
-  FilterTaskInput,
-  MutationUpdateTaskArgs,
-  Status,
-  Task,
-  TaskTag,
-} from "@/graphql/types";
+import { FilterTaskInput, Status, Task, TaskTag } from "@/graphql/types";
 import { useMutation, useQuery } from "@apollo/client";
 import {
   DndContext,
   DragEndEvent,
   MouseSensor,
   PointerSensor,
-  TouchSensor,
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
@@ -62,12 +53,11 @@ export default function Home() {
 
   const sensors = useSensors(mouseSensor, pointerSensor);
 
-  const [mutate] =
-    useMutation(UPDATE_TASK, {
-      onCompleted: () => {
-        toast({ title: "Task updated" })
-      }
-    });
+  const [mutate] = useMutation(UPDATE_TASK, {
+    onCompleted: () => {
+      toast({ title: "Task updated" });
+    },
+  });
 
   // Array of objects containing header and corresponding status
   const columns = [

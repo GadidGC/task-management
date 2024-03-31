@@ -7,9 +7,9 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export enum TASK_STATUS_TIME {
-  LATE = 'late',
-  ALMOST_LATE = 'almost late',
-  ON_TIME = 'on time'
+  LATE = "late",
+  ALMOST_LATE = "almost late",
+  ON_TIME = "on time",
 }
 
 export function checkTaskStatus(taskDate: Date): TASK_STATUS_TIME {
@@ -26,7 +26,6 @@ export function checkTaskStatus(taskDate: Date): TASK_STATUS_TIME {
   }
 
   return TASK_STATUS_TIME.ON_TIME;
-
 }
 
 export function convertEstimateToReadbleNumber(
@@ -51,22 +50,27 @@ export function convertEstimateToReadbleNumber(
   return "0";
 }
 
-export function convertDeprecatedURL(deprecatedURL: string, name: string): string {
+export function convertDeprecatedURL(
+  deprecatedURL: string,
+  name: string,
+): string {
   const baseURL = "https://avatars.dicebear.com/api/initials/";
-  const newName = name.replace(/\s/g, '').toLowerCase(); // Remove spaces and convert to lowercase
+  const newName = name.replace(/\s/g, "").toLowerCase(); // Remove spaces and convert to lowercase
   const newURL = `https://api.dicebear.com/8.x/open-peeps/svg?flip=false&seed=${newName}`;
 
   if (deprecatedURL.startsWith(baseURL)) {
-    const initials = deprecatedURL.substring(baseURL.length).replace('.svg', '');
+    const initials = deprecatedURL
+      .substring(baseURL.length)
+      .replace(".svg", "");
     return newURL.replace(newName, initials);
   }
 
-  return deprecatedURL
+  return deprecatedURL;
 }
 
 export function generateDiceBearUrl(name: string): string {
-  const newName = name.replace(/\s/g, '').toLowerCase(); // Remove spaces and convert to lowercase
+  const newName = name.replace(/\s/g, "").toLowerCase(); // Remove spaces and convert to lowercase
   const newURL = `https://api.dicebear.com/8.x/open-peeps/jpg?flip=false&seed=${newName}`;
 
-  return newURL
+  return newURL;
 }

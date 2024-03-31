@@ -1,6 +1,12 @@
 "use client";
+
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogClose, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import {
   Form,
   FormControl,
@@ -24,7 +30,7 @@ import {
   Status,
   Task,
   TaskTag,
-  User
+  User,
 } from "@/graphql/types";
 import { cn } from "@/lib/utils";
 import { useMutation, useSuspenseQuery } from "@apollo/client";
@@ -56,36 +62,44 @@ export const TaskForm = ({
 }: {
   variant: { type: "CREATE" } | { type: "UPDATE"; value: Task };
 }) => {
-  const [mutate, { loading, error }] = useMutation<Mutation>(
-    variant.type === "CREATE" ? CREATE_TASK : UPDATE_TASK, variant.type === "CREATE" ? {
-      update(cache, { data }) {
-        if (!data) { return }
+  const [mutate] = useMutation<Mutation>(
+    variant.type === "CREATE" ? CREATE_TASK : UPDATE_TASK,
+    variant.type === "CREATE"
+      ? {
+          update(cache, { data }) {
+            if (!data) {
+              return;
+            }
 
-        const existingTasks: { tasks: Task[] } = cache.readQuery({ query: GET_TASKS, variables: { input: {} } }) ?? { tasks: [] };
-        const update = [...existingTasks.tasks, { ...data.createTask }];
+            const existingTasks: { tasks: Task[] } = cache.readQuery({
+              query: GET_TASKS,
+              variables: { input: {} },
+            }) ?? { tasks: [] };
+            const update = [...existingTasks.tasks, { ...data.createTask }];
 
-        cache.writeQuery({
-          query: GET_TASKS,
-          data: {
-            tasks: update,
+            cache.writeQuery({
+              query: GET_TASKS,
+              data: {
+                tasks: update,
+              },
+              variables: {
+                input: {},
+              },
+            });
           },
-          variables: {
-            input: {}
-          }
-        });
-      }
-      , onCompleted: () => {
-        toast({
-          title: "Task created"
-        })
-      }
-    } : {
-    onCompleted: () => {
-      toast({
-        title: "Task updated"
-      })
-    }
-  }
+          onCompleted: () => {
+            toast({
+              title: "Task created",
+            });
+          },
+        }
+      : {
+          onCompleted: () => {
+            toast({
+              title: "Task updated",
+            });
+          },
+        },
   );
 
   const { data: users } = useSuspenseQuery<{ users: User[] }>(GET_USERS);
@@ -95,13 +109,13 @@ export const TaskForm = ({
     defaultValues:
       variant.type === "UPDATE"
         ? {
-          tags: variant.value.tags ?? [],
-          name: variant.value.name,
-          assigneeId: variant.value.assignee?.id,
-          pointEstimate: variant.value.pointEstimate,
-          id: variant.value.id,
-          dueDate: new Date(variant.value.dueDate),
-        }
+            tags: variant.value.tags ?? [],
+            name: variant.value.name,
+            assigneeId: variant.value.assignee?.id,
+            pointEstimate: variant.value.pointEstimate,
+            id: variant.value.id,
+            dueDate: new Date(variant.value.dueDate),
+          }
         : { tags: [], status: Status.Backlog, name: "New Task" },
   });
 
@@ -113,7 +127,10 @@ export const TaskForm = ({
         },
       },
     });
-    form.reset();
+
+    if (variant.type === "CREATE") {
+      form.reset();
+    }
   }
 
   return (
@@ -124,7 +141,9 @@ export const TaskForm = ({
             <PlusIcon />
           </div>
         ) : (
-          <div className="z-50 select-none bg-background p-2 px-4 w-full flex items-center gap-2"><Edit2Icon size={15} />Edit</div>
+          <div className="z-50 select-none bg-background p-2 px-4 w-full flex items-center gap-2">
+            <Edit2Icon size={15} /> Edit
+          </div>
         )}
       </DialogTrigger>
       <DialogContent className="max-w-3xl z-50">
@@ -147,7 +166,7 @@ export const TaskForm = ({
                 control={form.control}
                 name="pointEstimate"
                 render={({ field }) => (
-                  <FormItem >
+                  <FormItem>
                     <Select
                       onValueChange={field.onChange}
                       defaultValue={field.value}
@@ -212,7 +231,7 @@ export const TaskForm = ({
                       </PopoverTrigger>
                       <PopoverContent>
                         {Object.values(TaskTag).map((item) => (
-                          < FormField
+                          <FormField
                             key={item}
                             control={form.control}
                             name="tags"
@@ -228,14 +247,14 @@ export const TaskForm = ({
                                       onCheckedChange={(checked) => {
                                         return checked
                                           ? field.onChange([
-                                            ...field.value,
-                                            item,
-                                          ])
+                                              ...field.value,
+                                              item,
+                                            ])
                                           : field.onChange(
-                                            field.value?.filter(
-                                              (value) => value !== item,
-                                            ),
-                                          );
+                                              field.value?.filter(
+                                                (value) => value !== item,
+                                              ),
+                                            );
                                       }}
                                     />
                                   </FormControl>
@@ -294,7 +313,7 @@ export const TaskForm = ({
             </div>
             <div className="flex float-right pt-4 gap-5">
               <DialogClose asChild>
-                <Button size={"sm"} type="button" variant={'outline'}>
+                <Button size={"sm"} type="button" variant={"outline"}>
                   Cancel
                 </Button>
               </DialogClose>
