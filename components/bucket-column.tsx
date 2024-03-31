@@ -55,7 +55,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { AlarmClockIcon } from "lucide-react";
+import { AlarmClockIcon, Trash2Icon } from "lucide-react";
 import { Draggable } from "./draggable";
 import { format } from "date-fns";
 import Image from "next/image";
@@ -95,7 +95,7 @@ export function AlertDialogDemo({
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="outline">Delete</Button>
+        <div className="z-50 select-none bg-background p-2 px-4 w-full flex items-center gap-2 mt-1"><Trash2Icon size={15} />Delete</div>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

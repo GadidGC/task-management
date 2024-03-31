@@ -32,7 +32,7 @@ import { cn } from "@/lib/utils";
 import { useMutation, useSuspenseQuery } from "@apollo/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
-import { CalendarIcon, PlusIcon } from "lucide-react";
+import { CalendarIcon, Edit2Icon, PlusIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Calendar } from "./ui/calendar";
@@ -123,7 +123,7 @@ export const TaskForm = ({
             <PlusIcon />
           </div>
         ) : (
-          <div className="z-50 select-none">Edit</div>
+          <div className="z-50 select-none bg-background p-2 px-4 w-full flex items-center gap-2"><Edit2Icon size={15} />Edit</div>
         )}
       </DialogTrigger>
       <DialogContent className="max-w-3xl z-50">
