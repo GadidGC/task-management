@@ -51,7 +51,7 @@ export default async function Settings() {
         </CardHeader>
         <CardContent className="gap-2 flex flex-col">
           <div className="flex flex-row justify-between w-full">
-            <p>User type:</p>
+            <p>User CHANGE TEST:</p>
             <p>{data.profile.type}</p>
           </div>
           <div className="flex flex-row justify-between w-full">
