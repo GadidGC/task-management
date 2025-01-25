@@ -1,4 +1,4 @@
-# Ravn React Task Management App
+# Ravn React Task Management App - Challenge made in 3 days
 
 Welcome to the Ravn React Task Management App project! This application allows users to manage tasks efficiently, featuring a clean and intuitive interface. Below you'll find all the necessary information to set up and run the project, along with a summary of the implemented features and technologies used.
 
